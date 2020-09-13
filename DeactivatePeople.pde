@@ -9,7 +9,7 @@ float angx[] = new float[3];
 float angy[] = new float[3]; 
 
 void setup() {
-  size(900, 900);
+  size(600, 900);
   //fullScreen();
   background(0);
   colorMode(HSB);
@@ -28,18 +28,6 @@ void draw() {
   strokeWeight(20);
   stroke((angle*50)%255, 255, 255);
   
-  line(mouseX, mouseY, pmouseX, pmouseY);
-  line(width-mouseX, mouseY, width-pmouseX, pmouseY);
-  line(mouseX, height-mouseY, pmouseX, height-pmouseY);
-  line(width-mouseX, height-mouseY, width-pmouseX, height-pmouseY);
-  if(!mousePressed) {
-    line(mouseY, mouseX, pmouseY, pmouseX);
-    line(mouseY, width-mouseX, pmouseY, width-pmouseX);
-    line(height-mouseY, mouseX, height-pmouseY, pmouseX);
-    line(height-mouseY, width-mouseX, height-pmouseY, width-pmouseX);
-  }
-  
-  
   angx[0] = dista*cos(angle);
   angx[1] = dista*cos(angle+phase);
   angx[2] = dista*cos(angle-phase);
@@ -48,15 +36,31 @@ void draw() {
   angy[1] = dista*sin(angle+phase);
   angy[2] = dista*sin(angle-phase);
 
+  int nX = mouseY*width/height;
+  int nY = mouseX*height/width;
+  int pX = pmouseY*width/height;
+  int pY = pmouseX*height/width;
+
+  line(mouseX, mouseY, pmouseX, pmouseY);
+  line(width-mouseX, mouseY, width-pmouseX, pmouseY);
+  line(mouseX, height-mouseY, pmouseX, height-pmouseY);
+  line(width-mouseX, height-mouseY, width-pmouseX, height-pmouseY);
+  if(!mousePressed) {
+    line(nX, nY, pX, pY);
+    line(width-nX, nY, width-pX, pY);
+    line(nX, height-nY, pX, height-pY);
+    line(width-nX, height-nY, width-pX, height-pY);
+  }
+
   drawSphere(mouseX, mouseY);
   drawSphere(width-mouseX, mouseY);
   drawSphere(mouseX, height-mouseY);
   drawSphere(width-mouseX, height-mouseY);
   if(!mousePressed) {
-    drawSphere(mouseY, mouseX);
-    drawSphere(mouseY,width-mouseX);
-    drawSphere(height-mouseY, mouseX);
-    drawSphere(height-mouseY, width-mouseX);
+    drawSphere(nX, nY);
+    drawSphere(width-nX, nY);
+    drawSphere(nX, height-nY);
+    drawSphere(width-nX, height-nY);
   }
   
   angle += 0.08;
