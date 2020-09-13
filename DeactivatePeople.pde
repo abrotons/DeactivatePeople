@@ -7,6 +7,10 @@ float sphereSize = 8.0;
 float angx[] = new float[3];
 float angy[] = new float[3];
 
+int num = 4;
+boolean optDrawLines = true;
+boolean optDrawSpheres = true;
+
 void setup() {
   size(600, 900);
   //fullScreen();
@@ -39,26 +43,26 @@ void draw() {
   int pX = pmouseY*width/height;
   int pY = pmouseX*height/width;
 
-  line(mouseX, mouseY, pmouseX, pmouseY);
-  line(width-mouseX, mouseY, width-pmouseX, pmouseY);
-  line(mouseX, height-mouseY, pmouseX, height-pmouseY);
-  line(width-mouseX, height-mouseY, width-pmouseX, height-pmouseY);
-  if (!mousePressed) {
-    line(nX, nY, pX, pY);
-    line(width-nX, nY, width-pX, pY);
-    line(nX, height-nY, pX, height-pY);
-    line(width-nX, height-nY, width-pX, height-pY);
+  if (optDrawLines) {
+    line(mouseX, mouseY, pmouseX, pmouseY);
+    if (num>1)line(width-mouseX, mouseY, width-pmouseX, pmouseY);
+    if (num>2)line(mouseX, height-mouseY, pmouseX, height-pmouseY);
+    if (num>2)line(width-mouseX, height-mouseY, width-pmouseX, height-pmouseY);
+    if (num>3)line(nX, nY, pX, pY);
+    if (num>3)line(width-nX, nY, width-pX, pY);
+    if (num>3)line(nX, height-nY, pX, height-pY);
+    if (num>3)line(width-nX, height-nY, width-pX, height-pY);
   }
 
-  drawSphere(mouseX, mouseY);
-  drawSphere(width-mouseX, mouseY);
-  drawSphere(mouseX, height-mouseY);
-  drawSphere(width-mouseX, height-mouseY);
-  if (!mousePressed) {
-    drawSphere(nX, nY);
-    drawSphere(width-nX, nY);
-    drawSphere(nX, height-nY);
-    drawSphere(width-nX, height-nY);
+  if (optDrawSpheres) {
+    drawSphere(mouseX, mouseY);
+    if (num>1)drawSphere(width-mouseX, mouseY);
+    if (num>2)drawSphere(mouseX, height-mouseY);
+    if (num>2)drawSphere(width-mouseX, height-mouseY);
+    if (num>3)drawSphere(nX, nY);
+    if (num>3)drawSphere(width-nX, nY);
+    if (num>3)drawSphere(nX, height-nY);
+    if (num>3)drawSphere(width-nX, height-nY);
   }
 
   angle += 0.08;
@@ -86,7 +90,13 @@ void drawSphere(int x, int y) {
 }
 
 void keyPressed() {
-  if (key == 's') {
-    saveFrame();
+  if (key == 'p') {
+    saveFrame("deactivate-people-######.png");
+  } else if (key == 'l') {
+    optDrawLines = !optDrawLines;
+  } else if (key == 's') {
+    optDrawSpheres = !optDrawSpheres;
+  } else if (key >= '1' && key <= '4') {
+    num = key - '0';
   }
 }
