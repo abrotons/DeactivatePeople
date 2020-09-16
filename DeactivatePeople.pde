@@ -67,6 +67,8 @@ void draw() {
 
   angle += 0.08;
   dista = idista + cos(angle)*10.0;
+
+  if (optShowHelp) drawHelp();
 }
 
 void drawSphere(int x, int y) {
@@ -96,6 +98,8 @@ void keyPressed() {
     optDrawLines = !optDrawLines;
   } else if (key == 's') {
     optDrawSpheres = !optDrawSpheres;
+  } else if (key == 'h') {
+    optShowHelp = !optShowHelp;
   } else if (key >= '1' && key <= '4') {
     num = key - '0';
   }
